@@ -46,7 +46,9 @@ public static class Parser
     {
         return HttpUtility.HtmlDecode(
                 node["props"]["pageProps"]["contentData"]["data"]["title"]["plotSynopsis"]["edges"][0]["node"]["plotText"]["plaidHtml"].ToString())
-            .Replace("\n", " ");
+            .Replace("<br/>", " ")
+            .Replace("\n", " ")
+            .Replace("  ", " ");
     }
 
     private static string ToSummary(this JsonNode node)

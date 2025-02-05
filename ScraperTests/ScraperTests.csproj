@@ -22,4 +22,13 @@
       <ProjectReference Include="..\Scraper\Scraper.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="testFiles\s1e1.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="testFiles\s5e2.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
