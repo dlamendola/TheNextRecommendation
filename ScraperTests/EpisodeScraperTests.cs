@@ -28,11 +28,11 @@ public class EpisodeScraperTests
         await foreach (var actual in scraper.ScrapeEpisodesAsync())
         {
             Assert.Equal(epNumber, actual.EpisodeInSeason);
-            epNumber++;
             if (epNumber == 2)
             {
                 return;
             }
+            epNumber++;
         }
     }
 

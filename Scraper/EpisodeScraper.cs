@@ -29,6 +29,6 @@ public class EpisodeScraper(string initialEpisodeId)
 
     private Uri BuildPlotSummaryUrl(string episodeId)
     {
-        return new Uri($"{BaseUrl}{initialEpisodeId}/plotsummary/");
+        return new Uri($"{BaseUrl}{episodeId}/plotsummary/");
     }
 }
