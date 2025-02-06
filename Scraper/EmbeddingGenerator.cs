@@ -6,7 +6,7 @@ public class EmbeddingGenerator(EmbeddingClient client)
 {
     private readonly EmbeddingClient _client = client ?? throw new ArgumentNullException(nameof(client));
 
-    public async Task<ReadOnlyMemory<float>> Generate(string s)
+    public virtual async Task<ReadOnlyMemory<float>> Generate(string s)
     {
         var embedding = await _client.GenerateEmbeddingAsync(s);
 

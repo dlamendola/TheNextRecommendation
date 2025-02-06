@@ -4,13 +4,20 @@ namespace ScraperTests;
 
 public class EpisodeScraperTests
 {
+    private readonly EpisodeScraper _episodeScraper;
+
+    public EpisodeScraperTests()
+    {
+        _episodeScraper = new EpisodeScraper("https://imdb.com/title/");
+    }
+
     [Fact]
     public async Task ScrapeFirstEpisode()
     {
         var firstEpisodeId = "tt0094030";
         var expected = FirstEpisode;
 
-        await foreach (var actual in EpisodeScraper.ScrapeEpisodesAsync(firstEpisodeId))
+        await foreach (var actual in _episodeScraper.ScrapeEpisodesAsync(firstEpisodeId))
         {
             Assert.Equal(expected, actual);
             return;
@@ -23,7 +30,7 @@ public class EpisodeScraperTests
         var firstEpisodeId = "tt0094030";
         var epNumber = 1;
 
-        await foreach (var actual in EpisodeScraper.ScrapeEpisodesAsync(firstEpisodeId))
+        await foreach (var actual in _episodeScraper.ScrapeEpisodesAsync(firstEpisodeId))
         {
             Assert.Equal(epNumber, actual.EpisodeInSeason);
             if (epNumber == 2)
@@ -40,7 +47,7 @@ public class EpisodeScraperTests
         var lastEpisodeId = "tt0111281";
         var numResults = 0;
 
-        await foreach (var _ in EpisodeScraper.ScrapeEpisodesAsync(lastEpisodeId))
+        await foreach (var _ in _episodeScraper.ScrapeEpisodesAsync(lastEpisodeId))
         {
             numResults++;
             if (numResults > 1)

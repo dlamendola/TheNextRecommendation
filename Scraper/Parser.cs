@@ -30,7 +30,7 @@ public static class Parser
         var startIndex = htmlSpan.IndexOf(startSpan, StringComparison.Ordinal);
         if (startIndex == -1) return string.Empty;
         
-        var afterStart = htmlSpan.Slice(startIndex + startSpan.Length);
+        var afterStart = htmlSpan[(startIndex + startSpan.Length)..];
         var endIndex = afterStart.IndexOf(endSpan, StringComparison.Ordinal);
         if (endIndex == -1) return string.Empty;
         

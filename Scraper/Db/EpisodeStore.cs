@@ -29,7 +29,7 @@ public class EpisodeStore(DbDataSource dataSource)
         return result;
     }
 
-    public async Task<int> Save(EpisodeRow episode)
+    public virtual async Task<int> Save(EpisodeRow episode)
     {
         using var conn = await GetConnection();
 

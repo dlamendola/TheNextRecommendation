@@ -41,5 +41,4 @@ public class ParserTests
         
         Assert.Equal(expected, actual);
     }
-    
 }

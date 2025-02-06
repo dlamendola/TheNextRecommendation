@@ -1,4 +1,5 @@
-﻿using OpenAI.Embeddings;
+﻿using Microsoft.Extensions.Logging;
+using OpenAI.Embeddings;
 using Scraper;
 using Scraper.Db;
 
@@ -16,10 +17,17 @@ if (string.IsNullOrEmpty(dbConn))
     return;
 }
 
+var scraper = new EpisodeScraper("https://imdb.com/title/");
+
 var embeddingGenerator = new EmbeddingGenerator(new EmbeddingClient("text-embedding-3-small", openaiApiKey));
 
 await using var dataSource = PostgresVectorUtils.BuildDataSource(dbConn);
 var episodeStore = new EpisodeStore(dataSource);
 
-var dataLoader = new DataLoader(episodeStore, embeddingGenerator);
+using var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+var logger = loggerFactory.CreateLogger<DataLoader>();
+
+var dataLoader = new DataLoader(scraper, episodeStore, embeddingGenerator, logger);
 await dataLoader.LoadDataAsync();
+
+Console.WriteLine("Loading complete!");

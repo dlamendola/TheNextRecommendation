@@ -1,10 +1,8 @@
 namespace Scraper;
 
-public static class EpisodeScraper
+public class EpisodeScraper(string baseUrl)
 {
-    private const string BaseUrl = "https://www.imdb.com/title/";
-
-    public static async IAsyncEnumerable<Episode> ScrapeEpisodesAsync(string initialEpisodeId)
+    public virtual async IAsyncEnumerable<Episode> ScrapeEpisodesAsync(string initialEpisodeId)
     {
         var nextUrl = BuildPlotSummaryUrl(initialEpisodeId);
         using var httpClient = new HttpClient();
@@ -27,8 +25,8 @@ public static class EpisodeScraper
         }
     }
 
-    private static Uri BuildPlotSummaryUrl(string episodeId)
+    private Uri BuildPlotSummaryUrl(string episodeId)
     {
-        return new Uri($"{BaseUrl}{episodeId}/plotsummary/");
+        return new Uri($"{baseUrl}{episodeId}/plotsummary/");
     }
 }
