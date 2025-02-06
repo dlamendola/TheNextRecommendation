@@ -1,10 +1,10 @@
 using System.Data.Common;
 using Dapper;
 using Npgsql;
-using Scraper.Db;
+using ImdbIngest.Db;
 using Testcontainers.PostgreSql;
 
-namespace ScraperTests.Db;
+namespace ImdbIngestTests.Db;
 
 public class DbFixture : IAsyncLifetime
 {

@@ -1,6 +1,6 @@
 using OpenAI.Embeddings;
 
-namespace Scraper;
+namespace ImdbIngest;
 
 public class EmbeddingGenerator(EmbeddingClient client)
 {

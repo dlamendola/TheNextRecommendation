@@ -1,6 +1,6 @@
 using Pgvector;
 
-namespace Scraper.Db;
+namespace ImdbIngest.Db;
 
 public record EpisodeRow(
     int? Id,

@@ -1,10 +1,10 @@
+using ImdbIngest.Db;
 using Microsoft.Extensions.Logging;
 using Pgvector;
-using Scraper.Db;
 
-namespace Scraper;
+namespace ImdbIngest;
 
-public class DataLoader(EpisodeScraper scraper, EpisodeStore episodeStore, EmbeddingGenerator embeddingGenerator, ILogger<DataLoader> logger)
+public class IngestOrchestrator(EpisodeScraper scraper, EpisodeStore episodeStore, EmbeddingGenerator embeddingGenerator, ILogger<IngestOrchestrator> logger)
 {
     private const string FirstEpisodeId = "tt0094030";
     

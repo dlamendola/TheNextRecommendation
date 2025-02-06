@@ -1,7 +1,7 @@
 using System.Text.Json.Nodes;
 using System.Web;
 
-namespace Scraper;
+namespace ImdbIngest;
 
 public static class Parser
 {

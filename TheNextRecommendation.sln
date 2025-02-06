@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper", "Scraper\Scraper.csproj", "{505DE511-70A3-4390-9F2F-7392F93D7FEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImdbIngest", "ImdbIngest\ImdbIngest.csproj", "{505DE511-70A3-4390-9F2F-7392F93D7FEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScraperTests", "ScraperTests\ScraperTests.csproj", "{E6EBAC15-320C-42D8-B967-7559FA8E1602}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImdbIngestTests", "ImdbIngestTests\ImdbIngestTests.csproj", "{E6EBAC15-320C-42D8-B967-7559FA8E1602}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,23 +3,23 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using OpenAI.Embeddings;
 using Pgvector;
-using Scraper;
-using Scraper.Db;
+using ImdbIngest;
+using ImdbIngest.Db;
 
-namespace ScraperTests;
+namespace ImdbIngestTests;
 
-public class DataLoaderTests
+public class IngestOrchestratorTests
 {
     private readonly Mock<EpisodeScraper> _scraper = new("fakeBaseUrl.com/");
     private readonly Mock<EpisodeStore> _store = new(new Mock<DbDataSource>().Object);
     private readonly Mock<EmbeddingGenerator> _embeddingGenerator = new(new Mock<EmbeddingClient>().Object);
-    private readonly Mock<ILogger<DataLoader>> _logger = new();
+    private readonly Mock<ILogger<IngestOrchestrator>> _logger = new();
 
-    private readonly DataLoader _dataLoader;
+    private readonly IngestOrchestrator _dataLoader;
 
-    public DataLoaderTests()
+    public IngestOrchestratorTests()
     {
-        _dataLoader = new DataLoader(_scraper.Object, _store.Object, _embeddingGenerator.Object, _logger.Object);
+        _dataLoader = new IngestOrchestrator(_scraper.Object, _store.Object, _embeddingGenerator.Object, _logger.Object);
     }
 
     [Fact]
@@ -80,8 +80,6 @@ public class DataLoaderTests
         };
         _scraper.Setup(x => x.ScrapeEpisodesAsync(It.IsAny<string>())).Returns(episode.ToAsyncEnumerable());
         _embeddingGenerator.Setup(x => x.Generate("some details here")).ReturnsAsync(new float[] { 1f, 2f, 3f });
-        var expectedSavedEpisode = new EpisodeRow(null, 7, 25, "The finale", "", "some details here",
-            new Vector(new float[] { 1f, 2f, 3f }));
 
         await _dataLoader.LoadDataAsync();
 

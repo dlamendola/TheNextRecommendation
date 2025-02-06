@@ -3,7 +3,7 @@ using Dapper;
 using Npgsql;
 using Pgvector.Dapper;
 
-namespace Scraper.Db;
+namespace ImdbIngest.Db;
 
 public static class PostgresVectorUtils
 {

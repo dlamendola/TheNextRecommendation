@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Scraper\Scraper.csproj" />
+      <ProjectReference Include="..\ImdbIngest\ImdbIngest.csproj" />
     </ItemGroup>
 
     <ItemGroup>

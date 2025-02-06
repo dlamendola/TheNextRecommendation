@@ -1,7 +1,7 @@
 using Pgvector;
-using Scraper.Db;
+using ImdbIngest.Db;
 
-namespace ScraperTests.Db;
+namespace ImdbIngestTests.Db;
 
 public class EpisodeStoreTests : IClassFixture<DbFixture>
 {

@@ -1,6 +1,6 @@
-using Scraper;
+using ImdbIngest;
 
-namespace ScraperTests;
+namespace ImdbIngestTests;
 
 public class EmbeddingGeneratorTests
 {

@@ -1,4 +1,4 @@
-namespace Scraper;
+namespace ImdbIngest;
 
 public class EpisodeScraper(string baseUrl)
 {

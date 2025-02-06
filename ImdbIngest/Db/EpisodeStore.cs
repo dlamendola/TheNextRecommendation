@@ -2,7 +2,7 @@ using System.Data;
 using System.Data.Common;
 using Dapper;
 
-namespace Scraper.Db;
+namespace ImdbIngest.Db;
 
 public class EpisodeStore(DbDataSource dataSource)
 {
