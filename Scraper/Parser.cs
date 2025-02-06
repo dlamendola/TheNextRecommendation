@@ -5,8 +5,8 @@ namespace Scraper;
 
 public static class Parser
 {
-    private const string StartOfJson = "<script id=\"__NEXT_DATA__\" type=\"application/json\">";
-    private const string EndOfJson = "</script>";
+    private static readonly ReadOnlyMemory<char> StartOfJson = "<script id=\"__NEXT_DATA__\" type=\"application/json\">".AsMemory();
+    private static readonly ReadOnlyMemory<char> EndOfJson = "</script>".AsMemory();
 
     public static Episode ParseHtml(string html)
     {
@@ -20,16 +20,23 @@ public static class Parser
         var node = JsonNode.Parse(jsonString);
         return node;
     }
-
+    
     private static string ExtractJsonString(string html)
     {
-        var indexOfNextData = html.IndexOf(StartOfJson, StringComparison.Ordinal);
-        var restOfPage = html.Substring(indexOfNextData);
-        var endOfJson = restOfPage.IndexOf(EndOfJson, StringComparison.Ordinal);
-        var substringLength = endOfJson - StartOfJson.Length;
-        var line = restOfPage.Substring(StartOfJson.Length, substringLength);
-        return line;
+        var htmlSpan = html.AsSpan();
+        var startSpan = StartOfJson.Span;
+        var endSpan = EndOfJson.Span;
+        
+        var startIndex = htmlSpan.IndexOf(startSpan, StringComparison.Ordinal);
+        if (startIndex == -1) return string.Empty;
+        
+        var afterStart = htmlSpan.Slice(startIndex + startSpan.Length);
+        var endIndex = afterStart.IndexOf(endSpan, StringComparison.Ordinal);
+        if (endIndex == -1) return string.Empty;
+        
+        return afterStart.Slice(0, endIndex).ToString();
     }
+
     private static Episode BuildEpisodeFromJsonNode(JsonNode? node)
     {
         return new Episode(
