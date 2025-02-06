@@ -21,7 +21,7 @@ public class EpisodeStoreTests : IClassFixture<DbFixture>
     }
 
     [Fact]
-    public async Task SaveEpisode()
+    public async Task SaveAndGetEpisode()
     {
         var episode = new EpisodeRow(
             Id: null,

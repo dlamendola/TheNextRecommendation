@@ -1,7 +1,7 @@
 using System.Data.Common;
 using Dapper;
 using Npgsql;
-using Pgvector.Dapper;
+using Scraper.Db;
 using Testcontainers.PostgreSql;
 
 namespace ScraperTests.Db;
@@ -21,12 +21,8 @@ public class DbFixture : IAsyncLifetime
         
         await _postgres.StartAsync();
         await CreateTable();
-        
-        SqlMapper.AddTypeHandler(new VectorTypeHandler());
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder(_postgres.GetConnectionString());
-        dataSourceBuilder.UseVector();
-        
-        _dataSource = dataSourceBuilder.Build();
+
+        _dataSource = PostgresVectorUtils.BuildDataSource(_postgres.GetConnectionString());
     }
 
     public async Task DisposeAsync()

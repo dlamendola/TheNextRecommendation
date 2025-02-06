@@ -9,9 +9,8 @@ public class EpisodeScraperTests
     {
         var firstEpisodeId = "tt0094030";
         var expected = FirstEpisode;
-        var scraper = new EpisodeScraper(firstEpisodeId);
 
-        await foreach (var actual in scraper.ScrapeEpisodesAsync())
+        await foreach (var actual in EpisodeScraper.ScrapeEpisodesAsync(firstEpisodeId))
         {
             Assert.Equal(expected, actual);
             return;
@@ -22,10 +21,9 @@ public class EpisodeScraperTests
     public async Task ScrapesSubsequentEpisodes()
     {
         var firstEpisodeId = "tt0094030";
-        var scraper = new EpisodeScraper(firstEpisodeId);
         var epNumber = 1;
 
-        await foreach (var actual in scraper.ScrapeEpisodesAsync())
+        await foreach (var actual in EpisodeScraper.ScrapeEpisodesAsync(firstEpisodeId))
         {
             Assert.Equal(epNumber, actual.EpisodeInSeason);
             if (epNumber == 2)
@@ -40,10 +38,9 @@ public class EpisodeScraperTests
     public async Task ScrapeLastEpisode_ReturnsOneResult()
     {
         var lastEpisodeId = "tt0111281";
-        var scraper = new EpisodeScraper(lastEpisodeId);
         var numResults = 0;
 
-        await foreach (var _ in scraper.ScrapeEpisodesAsync())
+        await foreach (var _ in EpisodeScraper.ScrapeEpisodesAsync(lastEpisodeId))
         {
             numResults++;
             if (numResults > 1)

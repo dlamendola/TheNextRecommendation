@@ -1,4 +1,8 @@
-﻿var openaiApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+﻿using OpenAI.Embeddings;
+using Scraper;
+using Scraper.Db;
+
+var openaiApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
 if (string.IsNullOrEmpty(openaiApiKey))
 {
     Console.WriteLine("OPENAI_API_KEY environment variable is required");
@@ -12,3 +16,10 @@ if (string.IsNullOrEmpty(dbConn))
     return;
 }
 
+var embeddingGenerator = new EmbeddingGenerator(new EmbeddingClient("text-embedding-3-small", openaiApiKey));
+
+await using var dataSource = PostgresVectorUtils.BuildDataSource(dbConn);
+var episodeStore = new EpisodeStore(dataSource);
+
+var dataLoader = new DataLoader(episodeStore, embeddingGenerator);
+await dataLoader.LoadDataAsync();
