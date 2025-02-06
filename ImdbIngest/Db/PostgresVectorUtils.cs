@@ -7,12 +7,12 @@ namespace ImdbIngest.Db;
 
 public static class PostgresVectorUtils
 {
-    public static DbDataSource BuildDataSource(string connectionString)
-    {
-        SqlMapper.AddTypeHandler(new VectorTypeHandler());
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
-        dataSourceBuilder.UseVector();
-        
-        return dataSourceBuilder.Build();
-    }
+	public static DbDataSource BuildDataSource(string connectionString)
+	{
+		SqlMapper.AddTypeHandler(new VectorTypeHandler());
+		var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
+		dataSourceBuilder.UseVector();
+		
+		return dataSourceBuilder.Build();
+	}
 }
