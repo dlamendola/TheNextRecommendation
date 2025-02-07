@@ -12,7 +12,7 @@ public static class PostgresVectorUtils
 		SqlMapper.AddTypeHandler(new VectorTypeHandler());
 		var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
 		dataSourceBuilder.UseVector();
-		
+
 		return dataSourceBuilder.Build();
 	}
 }

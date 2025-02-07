@@ -1,90 +1,92 @@
 using System.Data.Common;
+using ImdbIngest;
+using ImdbIngest.Db;
 using Microsoft.Extensions.Logging;
 using Moq;
 using OpenAI.Embeddings;
 using Pgvector;
-using ImdbIngest;
-using ImdbIngest.Db;
 
 namespace ImdbIngestTests;
 
 public class IngestOrchestratorTests
 {
-    private readonly Mock<EpisodeScraper> _scraper = new("fakeBaseUrl.com/");
-    private readonly Mock<EpisodeStore> _store = new(new Mock<DbDataSource>().Object);
-    private readonly Mock<EmbeddingGenerator> _embeddingGenerator = new(new Mock<EmbeddingClient>().Object);
-    private readonly Mock<ILogger<IngestOrchestrator>> _logger = new();
+	private readonly IngestOrchestrator _dataLoader;
+	private readonly Mock<EmbeddingGenerator> _embeddingGenerator = new(new Mock<EmbeddingClient>().Object);
+	private readonly Mock<ILogger<IngestOrchestrator>> _logger = new();
+	private readonly Mock<EpisodeScraper> _scraper = new("fakeBaseUrl.com/");
+	private readonly Mock<EpisodeStore> _store = new(new Mock<DbDataSource>().Object);
 
-    private readonly IngestOrchestrator _dataLoader;
+	public IngestOrchestratorTests()
+	{
+		_dataLoader =
+			new IngestOrchestrator(_scraper.Object, _store.Object, _embeddingGenerator.Object, _logger.Object);
+	}
 
-    public IngestOrchestratorTests()
-    {
-        _dataLoader = new IngestOrchestrator(_scraper.Object, _store.Object, _embeddingGenerator.Object, _logger.Object);
-    }
+	private IAsyncEnumerable<Episode> EmptyEpisodes => Enumerable.Empty<Episode>().ToAsyncEnumerable();
 
-    [Fact]
-    public async Task LoadDataAsync_NoEpisodes()
-    {
-        _scraper.Setup(x => x.ScrapeEpisodesAsync(It.IsAny<string>())).Returns(EmptyEpisodes);
+	[Fact]
+	public async Task LoadDataAsync_NoEpisodes()
+	{
+		_scraper.Setup(x => x.ScrapeEpisodesAsync(It.IsAny<string>())).Returns(EmptyEpisodes);
 
-        await _dataLoader.LoadDataAsync();
+		await _dataLoader.LoadDataAsync();
 
-        _embeddingGenerator.VerifyNoOtherCalls();
-        _store.VerifyNoOtherCalls();
-    }
+		_embeddingGenerator.VerifyNoOtherCalls();
+		_store.VerifyNoOtherCalls();
+	}
 
-    [Fact]
-    public async Task LoadDataAsync_StopsWhenNoNextEpisode()
-    {
-        var episode = new List<Episode>
-        {
-            new(Season: 7, EpisodeInSeason: 25, Title: "The finale", NextEpisodeId: null, Summary: "",
-                Synopsis: "some details here")
-        };
-        _scraper.Setup(x => x.ScrapeEpisodesAsync(It.IsAny<string>())).Returns(episode.ToAsyncEnumerable());
-        _embeddingGenerator.Setup(x => x.Generate("some details here")).ReturnsAsync(new float[] { 1f, 2f, 3f });
-        var expectedSavedEpisode = new EpisodeRow(null, 7, 25, "The finale", "", "some details here",
-            new Vector(new float[] { 1f, 2f, 3f }));
+	[Fact]
+	public async Task LoadDataAsync_StopsWhenNoNextEpisode()
+	{
+		var episode = new List<Episode>
+		{
+			new(7, 25, "The finale", null, "",
+				"some details here")
+		};
+		_scraper.Setup(x => x.ScrapeEpisodesAsync(It.IsAny<string>())).Returns(episode.ToAsyncEnumerable());
+		_embeddingGenerator.Setup(x => x.Generate("some details here")).ReturnsAsync(new[] { 1f, 2f, 3f });
+		var expectedSavedEpisode = new EpisodeRow(null, 7, 25, "The finale", "", "some details here",
+			new Vector(new[] { 1f, 2f, 3f }));
 
-        await _dataLoader.LoadDataAsync();
+		await _dataLoader.LoadDataAsync();
 
-        _store.Verify(x => x.Save(expectedSavedEpisode), Times.Once);
-    }
+		_store.Verify(x => x.Save(expectedSavedEpisode), Times.Once);
+	}
 
-    [Fact]
-    public async Task LoadDataAsync_LogsErrorOnException()
-    {
-        var episode = new List<Episode>
-        {
-            new(Season: 7, EpisodeInSeason: 25, Title: "The finale", NextEpisodeId: null, Summary: "",
-                Synopsis: "some details here")
-        };
-        _scraper.Setup(x => x.ScrapeEpisodesAsync(It.IsAny<string>())).Returns(episode.ToAsyncEnumerable());
-        _embeddingGenerator.Setup(x => x.Generate("some details here"))
-            .ThrowsAsync(new Exception("something went horribly wrong"));
-        
-        await _dataLoader.LoadDataAsync();
-        
-        _logger.Verify(x => x.Log(LogLevel.Error, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(), It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
-    }
+	[Fact]
+	public async Task LoadDataAsync_LogsErrorOnException()
+	{
+		var episode = new List<Episode>
+		{
+			new(7, 25, "The finale", null, "",
+				"some details here")
+		};
+		_scraper.Setup(x => x.ScrapeEpisodesAsync(It.IsAny<string>())).Returns(episode.ToAsyncEnumerable());
+		_embeddingGenerator.Setup(x => x.Generate("some details here"))
+			.ThrowsAsync(new Exception("something went horribly wrong"));
 
-    [Fact]
-    public async Task LoadDataAsync_SavesAllEpisodes()
-    {
-        var episode = new List<Episode>
-        {
-            new(Season: 1, EpisodeInSeason: 1, Title: "Episode 1", NextEpisodeId: null, Summary: "",
-                Synopsis: "some details here"),
-            new(Season: 1, EpisodeInSeason: 2, Title: "Episode 2", NextEpisodeId: null, Summary: "",
-                Synopsis: "some details here")
-        };
-        _scraper.Setup(x => x.ScrapeEpisodesAsync(It.IsAny<string>())).Returns(episode.ToAsyncEnumerable());
-        _embeddingGenerator.Setup(x => x.Generate("some details here")).ReturnsAsync(new float[] { 1f, 2f, 3f });
+		await _dataLoader.LoadDataAsync();
 
-        await _dataLoader.LoadDataAsync();
+		_logger.Verify(
+			x => x.Log(LogLevel.Error, It.IsAny<EventId>(), It.IsAny<It.IsAnyType>(), It.IsAny<Exception>(),
+				It.IsAny<Func<It.IsAnyType, Exception?, string>>()), Times.Once);
+	}
 
-        _store.Verify(x => x.Save(It.IsAny<EpisodeRow>()), Times.Exactly(2));
-    }
+	[Fact]
+	public async Task LoadDataAsync_SavesAllEpisodes()
+	{
+		var episode = new List<Episode>
+		{
+			new(1, 1, "Episode 1", null, "",
+				"some details here"),
+			new(1, 2, "Episode 2", null, "",
+				"some details here")
+		};
+		_scraper.Setup(x => x.ScrapeEpisodesAsync(It.IsAny<string>())).Returns(episode.ToAsyncEnumerable());
+		_embeddingGenerator.Setup(x => x.Generate("some details here")).ReturnsAsync(new[] { 1f, 2f, 3f });
 
-    IAsyncEnumerable<Episode> EmptyEpisodes => Enumerable.Empty<Episode>().ToAsyncEnumerable();
+		await _dataLoader.LoadDataAsync();
+
+		_store.Verify(x => x.Save(It.IsAny<EpisodeRow>()), Times.Exactly(2));
+	}
 }

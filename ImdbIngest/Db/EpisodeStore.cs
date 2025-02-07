@@ -9,7 +9,7 @@ public class EpisodeStore(DbDataSource dataSource)
 	public async Task<EpisodeRow?> GetById(int id)
 	{
 		using var conn = await GetConnection();
-		
+
 		var result = await conn.QuerySingleOrDefaultAsync<EpisodeRow>(
 			"""
 			select 
@@ -25,7 +25,7 @@ public class EpisodeStore(DbDataSource dataSource)
 			where 
 				Id = @id
 			""", new { id });
-		
+
 		return result;
 	}
 
@@ -39,7 +39,7 @@ public class EpisodeStore(DbDataSource dataSource)
 			values (@seasonNumber, @episodeNumber, @title, @summary, @synopsis, @synopsisEmbedding)
 			returning id;
 			""", episode);
-		
+
 		return insertedId;
 	}
 

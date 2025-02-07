@@ -5,7 +5,7 @@ namespace ImdbIngestTests;
 public class ParserTests
 {
 	[Fact]
-	public void ParseHtml_Ep1()
+	public void ParseHtml_S1E1()
 	{
 		var html = File.ReadAllText("testFiles/s1e1.html");
 		var expected = new Episode(

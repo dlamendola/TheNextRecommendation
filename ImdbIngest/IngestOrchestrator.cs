@@ -4,10 +4,14 @@ using Pgvector;
 
 namespace ImdbIngest;
 
-public class IngestOrchestrator(EpisodeScraper scraper, EpisodeStore episodeStore, EmbeddingGenerator embeddingGenerator, ILogger<IngestOrchestrator> logger)
+public class IngestOrchestrator(
+	EpisodeScraper scraper,
+	EpisodeStore episodeStore,
+	EmbeddingGenerator embeddingGenerator,
+	ILogger<IngestOrchestrator> logger)
 {
 	private const string FirstEpisodeId = "tt0094030";
-	
+
 	public async Task LoadDataAsync()
 	{
 		var tasks = new List<Task>();
@@ -15,7 +19,7 @@ public class IngestOrchestrator(EpisodeScraper scraper, EpisodeStore episodeStor
 		await foreach (var ep in scraper.ScrapeEpisodesAsync(FirstEpisodeId))
 		{
 			logger.LogInformation($"Scraped and parsed S{ep.Season}E{ep.EpisodeInSeason}");
-			
+
 			tasks.Add(SaveAndLogEpisode(ep));
 		}
 
@@ -41,13 +45,13 @@ public class IngestOrchestrator(EpisodeScraper scraper, EpisodeStore episodeStor
 		var vector = await embeddingGenerator.Generate(ep.Synopsis);
 
 		var row = new EpisodeRow(
-			Id: null,
-			SeasonNumber: ep.Season,
-			EpisodeNumber: ep.EpisodeInSeason,
-			Title: ep.Title,
-			Summary: ep.Summary,
-			Synopsis: ep.Synopsis,
-			SynopsisEmbedding: new Vector(vector.ToArray()));
+			null,
+			ep.Season,
+			ep.EpisodeInSeason,
+			ep.Title,
+			ep.Summary,
+			ep.Synopsis,
+			new Vector(vector.ToArray()));
 
 		await episodeStore.Save(row);
 	}
