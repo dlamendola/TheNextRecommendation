@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Dapper" Version="2.1.35"/>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.1"/>
-        <PackageReference Include="Npgsql" Version="9.0.2"/>
-        <PackageReference Include="OpenAI" Version="2.1.0"/>
-        <PackageReference Include="Pgvector.Dapper" Version="0.3.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
 
 </Project>

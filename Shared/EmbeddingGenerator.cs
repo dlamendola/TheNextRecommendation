@@ -1,6 +1,6 @@
 using OpenAI.Embeddings;
 
-namespace ImdbIngest;
+namespace Shared;
 
 public class EmbeddingGenerator(EmbeddingClient client)
 {

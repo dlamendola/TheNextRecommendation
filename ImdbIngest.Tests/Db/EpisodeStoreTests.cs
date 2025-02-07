@@ -1,7 +1,8 @@
 using ImdbIngest.Db;
 using Pgvector;
+using Shared.Db;
 
-namespace ImdbIngestTests.Db;
+namespace ImdbIngest.Tests.Db;
 
 public class EpisodeStoreTests : IClassFixture<DbFixture>
 {

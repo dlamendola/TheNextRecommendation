@@ -5,8 +5,10 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using OpenAI.Embeddings;
 using Pgvector;
+using Shared;
+using Shared.Db;
 
-namespace ImdbIngestTests;
+namespace ImdbIngest.Tests;
 
 public class IngestOrchestratorTests
 {

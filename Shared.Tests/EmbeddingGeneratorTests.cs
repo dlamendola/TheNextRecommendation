@@ -1,6 +1,4 @@
-using ImdbIngest;
-
-namespace ImdbIngestTests;
+namespace Shared.Tests;
 
 public class EmbeddingGeneratorTests
 {

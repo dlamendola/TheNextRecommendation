@@ -1,6 +1,7 @@
 using System.Data;
 using System.Data.Common;
 using Dapper;
+using Shared.Db;
 
 namespace ImdbIngest.Db;
 

@@ -1,4 +1,4 @@
-namespace ImdbIngest;
+namespace Shared;
 
 public record Episode(
 	int Season,

@@ -1,6 +1,7 @@
 ﻿using ImdbIngest;
+using Shared;
 
-namespace ImdbIngestTests;
+namespace ImdbIngest.Tests;
 
 public class EpisodeScraperTests
 {

@@ -1,0 +1,21 @@
+@Api_HostAddress = http://localhost:5108
+
+GET {{Api_HostAddress}}/health/
+Accept: application/json
+
+###
+
+POST {{Api_HostAddress}}/search
+Content-Type: application/json
+
+{
+  "searchText": "searching for something specific"
+}
+
+###
+
+POST {{Api_HostAddress}}/search
+Content-Type: application/json
+
+{
+}

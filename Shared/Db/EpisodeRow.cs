@@ -1,6 +1,6 @@
 using Pgvector;
 
-namespace ImdbIngest.Db;
+namespace Shared.Db;
 
 public record EpisodeRow(
 	int? Id,

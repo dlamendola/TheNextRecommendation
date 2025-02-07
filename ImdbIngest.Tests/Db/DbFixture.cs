@@ -4,7 +4,7 @@ using ImdbIngest.Db;
 using Npgsql;
 using Testcontainers.PostgreSql;
 
-namespace ImdbIngestTests.Db;
+namespace ImdbIngest.Tests.Db;
 
 public class DbFixture : IAsyncLifetime
 {

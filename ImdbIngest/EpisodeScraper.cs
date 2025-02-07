@@ -1,3 +1,5 @@
+using Shared;
+
 namespace ImdbIngest;
 
 public class EpisodeScraper(string baseUrl)
