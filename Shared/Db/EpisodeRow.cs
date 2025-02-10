@@ -9,4 +9,4 @@ public record EpisodeRow(
 	string Title,
 	string Summary,
 	string Synopsis,
-	Vector SynopsisEmbedding);
+	Vector? SynopsisEmbedding);

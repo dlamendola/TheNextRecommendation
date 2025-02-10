@@ -1,10 +1,10 @@
 using System.Data.Common;
 using Dapper;
-using ImdbIngest.Db;
 using Npgsql;
+using Shared.Db;
 using Testcontainers.PostgreSql;
 
-namespace ImdbIngest.Tests.Db;
+namespace Shared.Tests.Db;
 
 public class DbFixture : IAsyncLifetime
 {

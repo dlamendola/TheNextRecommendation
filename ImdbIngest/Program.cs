@@ -1,8 +1,8 @@
 ﻿using ImdbIngest;
-using ImdbIngest.Db;
 using Microsoft.Extensions.Logging;
 using OpenAI.Embeddings;
 using Shared;
+using Shared.Db;
 
 var openaiApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
 if (string.IsNullOrEmpty(openaiApiKey))

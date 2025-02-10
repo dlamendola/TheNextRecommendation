@@ -1,6 +1,6 @@
-using ImdbIngest.Db;
 using Pgvector;
 using Shared.Db;
+using Shared.Tests.Db;
 
 namespace ImdbIngest.Tests.Db;
 
@@ -39,6 +39,26 @@ public class EpisodeStoreTests : IClassFixture<DbFixture>
 		var result = await _store.GetById(id);
 
 		Assert.Equal(expected, result);
+	}
+
+	[Fact]
+	public async Task SearchBySemanticSimilarity()
+	{
+		var episode = new EpisodeRow(
+			null,
+			1,
+			1,
+			"Darmok",
+			"Crazy things happen",
+			"A long description of what happens in the episode",
+			CreateVector()
+		);
+		var id = await _store.Save(episode);
+		var vector = CreateVector();
+		
+		var result = await _store.SearchBySemanticSimilarity(vector, 1);
+
+		Assert.NotNull(result);
 	}
 
 	private static Vector CreateVector()

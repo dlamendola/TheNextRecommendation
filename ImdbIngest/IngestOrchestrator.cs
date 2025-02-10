@@ -1,4 +1,3 @@
-using ImdbIngest.Db;
 using Microsoft.Extensions.Logging;
 using Pgvector;
 using Shared;

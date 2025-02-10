@@ -1,9 +1,9 @@
 using System.Data;
 using System.Data.Common;
 using Dapper;
-using Shared.Db;
+using Pgvector;
 
-namespace ImdbIngest.Db;
+namespace Shared.Db;
 
 public class EpisodeStore(DbDataSource dataSource)
 {
@@ -42,6 +42,30 @@ public class EpisodeStore(DbDataSource dataSource)
 			""", episode);
 
 		return insertedId;
+	}
+
+	public virtual async Task<List<EpisodeRow>> SearchBySemanticSimilarity(Vector searchVector, int numResults)
+	{
+		using var conn = await GetConnection();
+		
+		var results = await conn.QueryAsync<EpisodeRow>(
+			"""
+				select 
+					id,
+					season_number as seasonNumber, 
+					episode_number as episodeNumber, 
+					title, 
+					summary, 
+					synopsis, 
+					synopsis_embedding as synopsisEmbedding 
+				from 
+					Episodes 
+				order by 
+					synopsis_embedding <=> @searchVector
+				limit @numResults
+				""", new { searchVector, numResults});
+
+		return results.ToList();
 	}
 
 	private async Task<IDbConnection> GetConnection()

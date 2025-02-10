@@ -1,6 +1,5 @@
 using System.Data.Common;
 using ImdbIngest;
-using ImdbIngest.Db;
 using Microsoft.Extensions.Logging;
 using Moq;
 using OpenAI.Embeddings;

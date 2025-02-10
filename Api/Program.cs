@@ -1,7 +1,33 @@
 using Api;
 using Api.Search;
+using OpenAI.Embeddings;
+using Shared;
+using Shared.Db;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+var openaiApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+if (string.IsNullOrEmpty(openaiApiKey))
+{
+	Console.WriteLine("OPENAI_API_KEY environment variable is required");
+	return;
+}
+
+var dbConn = Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING");
+if (string.IsNullOrEmpty(dbConn))
+{
+	Console.WriteLine("POSTGRES_CONNECTION_STRING environment variable is required");
+	return;
+}
+
+var embeddingGenerator = new EmbeddingGenerator(new EmbeddingClient("text-embedding-3-small", openaiApiKey));
+
+await using var dataSource = PostgresVectorUtils.BuildDataSource(dbConn);
+
+builder.Services.AddSingleton(embeddingGenerator);
+builder.Services.AddSingleton(dataSource);
+builder.Services.AddScoped<EpisodeStore>();
 
 builder.Services.AddSingleton<EpisodeSearchService>();
 builder.Services.AddSingleton<SearchHandler>();

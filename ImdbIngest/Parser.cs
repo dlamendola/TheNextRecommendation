@@ -43,12 +43,12 @@ public static class Parser
 	private static Episode BuildEpisodeFromJsonNode(JsonNode? node)
 	{
 		return new Episode(
-			node.ToSeason(),
-			node.ToEpisodeInSeason(),
-			node.ToTitle(),
-			node.ToNextEpisodeId(),
-			node.ToSummary(),
-			node.ToSynopsis()
+			Season: node.ToSeason(),
+			EpisodeInSeason: node.ToEpisodeInSeason(),
+			Title: node.ToTitle(),
+			NextEpisodeId: node.ToNextEpisodeId(),
+			Summary: node.ToSummary(),
+			Synopsis: node.ToSynopsis()
 		);
 	}
 
@@ -77,6 +77,7 @@ public static class Parser
 	{
 		return node["props"]["pageProps"]["contentData"]["entityMetadata"]["titleText"]["text"].ToString();
 	}
+
 
 	private static int ToEpisodeInSeason(this JsonNode node)
 	{
