@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ImdbIngest\ImdbIngest.csproj"/>
+        <ProjectReference Include="..\..\src\ImdbIngest\ImdbIngest.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

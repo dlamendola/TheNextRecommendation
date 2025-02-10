@@ -1,16 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImdbIngest", "ImdbIngest\ImdbIngest.csproj", "{505DE511-70A3-4390-9F2F-7392F93D7FEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImdbIngest", "src\ImdbIngest\ImdbIngest.csproj", "{505DE511-70A3-4390-9F2F-7392F93D7FEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImdbIngest.Tests", "ImdbIngest.Tests\ImdbIngest.Tests.csproj", "{E6EBAC15-320C-42D8-B967-7559FA8E1602}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImdbIngest.Tests", "tests\ImdbIngest.Tests\ImdbIngest.Tests.csproj", "{E6EBAC15-320C-42D8-B967-7559FA8E1602}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api\Api.csproj", "{B0D7E623-0CEC-4C6C-8AB7-CA935CDB1814}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Api\Api.csproj", "{B0D7E623-0CEC-4C6C-8AB7-CA935CDB1814}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Tests", "Api.Tests\Api.Tests.csproj", "{CE7B560A-2A15-40AC-830C-1776AF20AB18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Tests", "tests\Api.Tests\Api.Tests.csproj", "{CE7B560A-2A15-40AC-830C-1776AF20AB18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{5639AC87-45CE-44BB-926E-898A265E6DFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "src\Shared\Shared.csproj", "{5639AC87-45CE-44BB-926E-898A265E6DFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Tests", "Shared.Tests\Shared.Tests.csproj", "{B3E3760A-9AA8-497E-99F8-61F65949ED40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Tests", "tests\Shared.Tests\Shared.Tests.csproj", "{B3E3760A-9AA8-497E-99F8-61F65949ED40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
