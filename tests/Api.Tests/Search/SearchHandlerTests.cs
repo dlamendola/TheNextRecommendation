@@ -25,7 +25,7 @@ public class SearchHandlerTests
 	[Fact]
 	public async Task Search_NullSearchText()
 	{
-		var actual = await _handler.Search(new SearchRequest(null));
+		var actual = await _handler.Search(new SearchRequest(null!));
 
 		Assert.IsType<BadRequest>(actual);
 	}
@@ -53,12 +53,11 @@ public class SearchHandlerTests
 	{
 		var request = new SearchRequest("search text");
 		_episodeSearchServiceMock.Setup(x => x.Search("search text", 5)).ReturnsAsync(new List<Episode>());
-		var expected = new SearchApiResponse(new List<EpisodeApiResponse>());
 
 		var actual = await _handler.Search(request);
 
 		Assert.IsType<Ok<SearchApiResponse>>(actual);
 		var responseObject = actual as Ok<SearchApiResponse>;
-		Assert.Empty(responseObject.Value.Episodes);
+		Assert.Empty(responseObject!.Value!.Episodes);
 	}
 }

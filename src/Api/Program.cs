@@ -6,7 +6,6 @@ using Shared.Db;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 var openaiApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
 if (string.IsNullOrEmpty(openaiApiKey))
 {
