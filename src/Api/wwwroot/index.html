@@ -3,107 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Episode Search</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
-        }
-        nav {
-            margin-bottom: 40px;
-        }
-        nav a {
-            margin-right: 20px;
-            color: #333;
-            text-decoration: none;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        .search-container {
-            margin-bottom: 30px;
-        }
-        input[type="text"] {
-            padding: 8px;
-            width: 300px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button {
-            padding: 8px 16px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .results {
-            margin-top: 20px;
-        }
-        .episode {
-            padding: 15px;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-            border-radius: 4px;
-        }
-        .episode h3 {
-            margin: 0 0 10px 0;
-        }
-    </style>
+    <title>The Next Recommendation</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
 </head>
 <body>
-<nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-</nav>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+    </nav>
 
-<div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search episodes...">
-    <button onclick="searchEpisodes()">Search</button>
-</div>
+    <div class="search">
+        <div class="search-container">
+            <h1>The Next Recommendation</h1>
+            <input type="text" id="searchInput" placeholder="Try 'evil computers', 'court cases', etc.">
+            <button onclick="searchEpisodes()">Search</button>
+        </div>
 
-<div id="results" class="results"></div>
+        <div id="results" class="results"></div>
+    </div>
 
-<script>
-    async function searchEpisodes() {
-        const searchText = document.getElementById('searchInput').value;
-        const resultsDiv = document.getElementById('results');
-
-        try {
-            // Replace with your actual API endpoint
-            const request = new Request("/search", { method: 'POST',
-                body: JSON.stringify({searchText: searchText}),
-            headers: { 'Content-Type': 'application/json' }});
-            const response = await fetch(request);
-            const data = await response.json();
-
-            resultsDiv.innerHTML = data.episodes.map(episode => `
-                    <div class="episode">
-                        <h3>${episode.title}</h3>
-                        <p>${episode.summary}</p>
-                    </div>
-                `).join('');
-
-        } catch (error) {
-            resultsDiv.innerHTML = '<p>Error fetching results. Please try again.</p>';
-            console.error('Error:', error);
-        }
-    }
-
-    // Add event listener for Enter key
-    document.getElementById('searchInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            searchEpisodes();
-        }
-    });
-</script>
+    <script src="js/search.js"></script>
 </body>
 </html>
