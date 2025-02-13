@@ -1,5 +1,7 @@
+using System.ClientModel;
 using Api;
 using Api.Search;
+using OpenAI;
 using OpenAI.Embeddings;
 using Shared;
 using Shared.Db;
@@ -20,7 +22,14 @@ if (string.IsNullOrEmpty(dbConn))
 	return;
 }
 
-var embeddingGenerator = new EmbeddingGenerator(new EmbeddingClient("text-embedding-3-small", openaiApiKey));
+var embeddingClient = new EmbeddingClient(
+	"text-embedding-3-small", 
+	new ApiKeyCredential(openaiApiKey), 
+	new OpenAIClientOptions
+	{
+		NetworkTimeout = TimeSpan.FromSeconds(2)
+	});
+var embeddingGenerator = new EmbeddingGenerator(embeddingClient);
 
 await using var dataSource = PostgresVectorUtils.BuildDataSource(dbConn);
 
