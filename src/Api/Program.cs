@@ -39,7 +39,7 @@ builder.Services.AddScoped<EpisodeStore>();
 
 builder.Services.AddSingleton<EpisodeSearchService>();
 builder.Services.AddSingleton<SearchHandler>();
-builder.Services.AddSingleton<HealthCheckHandler>();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -52,5 +52,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapRoutes();
+app.MapHealthChecks("/health");
 
 app.Run();
