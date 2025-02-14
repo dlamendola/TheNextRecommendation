@@ -52,6 +52,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapRoutes();
-app.MapHealthChecks("/health");
 
 app.Run();

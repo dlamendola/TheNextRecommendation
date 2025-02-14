@@ -9,5 +9,6 @@ public static class Routes
 		var searchHandler = app.Services.GetRequiredService<SearchHandler>();
 		
 		app.MapPost("/search", searchHandler.Search);
+		app.MapHealthChecks("/health");
 	}
 }
