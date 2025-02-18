@@ -11,20 +11,23 @@
     <link rel="manifest" href="/favicon/site.webmanifest">
 </head>
 <body>
-    <div class="search">
-        <div class="search-container">
-            <h1>The Next Recommendation</h1>
-            <input type="text" id="searchInput" class="search-input">
-            <button onclick="searchEpisodes()">Search</button>
+    <main>
+        <div class="search">
+            <div class="search-container">
+                <h1>The Next Recommendation</h1>
+                <input type="text" id="searchInput" class="search-input">
+                <button onclick="searchEpisodes()">Search</button>
+            </div>
+
+            <div id="results" class="results"></div>
         </div>
 
-        <div id="results" class="results"></div>
-    </div>
-
-    <script src="js/search.js"></script>
+        <script src="js/search.js"></script>
+    </main>
 </body>
 <footer>
-    <a href="https://github.com/dlamendola/TheNextRecommendation" target="_blank" aria-label="View source code on GitHub">
+    <a href="https://github.com/dlamendola/TheNextRecommendation" target="_blank"
+       aria-label="View source code on GitHub">
         <img src="assets/github-mark-white.svg" alt="GitHub" width="32" height="32">
     </a>
 </footer>
