@@ -46,11 +46,6 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-if (app.Environment.IsDevelopment())
-{
-	app.MapOpenApi();
-}
-
 app.MapRoutes();
 
 app.Run();
