@@ -33,17 +33,20 @@ const searchInput = document.getElementById('searchInput'); // Reference to the 
 
 const placeholders = [
     'Try: "ethical dilemmas involving AI"',
-    'Try: "leadership lessons"',
+    'Try: "time paradoxes"',
     'Try: "cultural misunderstandings"',
-    'Try: "scientific method"',
+    'Try: "leadership lessons"',
+    'Try: "military ethics"',
+    'Try: "trust and betrayal"',
+    'Try: "technological advancement consequences"',
 ];
 
 let currentIndex = 0;
 let placeholderInterval;
 
 function updatePlaceholder() {
-    currentIndex = (currentIndex + 1) % placeholders.length;
     searchInput.setAttribute('placeholder', placeholders[currentIndex]);
+    currentIndex = (currentIndex + 1) % placeholders.length;
 }
 
 function startPlaceholderRotation() {
@@ -56,3 +59,6 @@ function stopPlaceholderRotation() {
 
 searchInput.addEventListener('focus', stopPlaceholderRotation);
 searchInput.addEventListener('blur', startPlaceholderRotation);
+
+updatePlaceholder();
+startPlaceholderRotation()
