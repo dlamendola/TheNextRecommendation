@@ -23,9 +23,36 @@ async function searchEpisodes() {
     }
 }
 
-// Add event listener for Enter key
 document.getElementById('searchInput').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         searchEpisodes();
     }
 });
+
+const searchInput = document.getElementById('searchInput'); // Reference to the input field
+
+const placeholders = [
+    'Try: "ethical dilemmas involving AI"',
+    'Try: "leadership lessons"',
+    'Try: "cultural misunderstandings"',
+    'Try: "scientific method"',
+];
+
+let currentIndex = 0;
+let placeholderInterval;
+
+function updatePlaceholder() {
+    currentIndex = (currentIndex + 1) % placeholders.length;
+    searchInput.setAttribute('placeholder', placeholders[currentIndex]);
+}
+
+function startPlaceholderRotation() {
+    placeholderInterval = setInterval(updatePlaceholder, 4000); // Update every 4 seconds
+}
+
+function stopPlaceholderRotation() {
+    clearInterval(placeholderInterval);
+}
+
+searchInput.addEventListener('focus', stopPlaceholderRotation);
+searchInput.addEventListener('blur', startPlaceholderRotation);
