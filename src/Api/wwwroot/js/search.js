@@ -12,7 +12,7 @@ async function searchEpisodes() {
 
         resultsDiv.innerHTML = data.episodes.map(episode => `
                     <div class="episode">
-                        <h3>${episode.title}</h3>
+                        <h3>${episode.title} (S${episode.season}E${episode.episode})</h3>
                         <p>${episode.summary}</p>
                     </div>
                 `).join('');
@@ -50,6 +50,7 @@ function updatePlaceholder() {
 }
 
 function startPlaceholderRotation() {
+    updatePlaceholder();
     placeholderInterval = setInterval(updatePlaceholder, 4000); // Update every 4 seconds
 }
 
@@ -60,5 +61,4 @@ function stopPlaceholderRotation() {
 searchInput.addEventListener('focus', stopPlaceholderRotation);
 searchInput.addEventListener('blur', startPlaceholderRotation);
 
-updatePlaceholder();
 startPlaceholderRotation()

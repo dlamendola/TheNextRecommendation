@@ -44,7 +44,7 @@ public class EpisodeStore(DbDataSource dataSource)
 		return insertedId;
 	}
 
-	public virtual async Task<List<EpisodeRow>> SearchBySemanticSimilarity(Vector searchVector, int numResults)
+	public virtual async Task<List<EpisodeRow>> GetNearestEpisodes(Vector searchVector, int numResults)
 	{
 		using var conn = await GetConnection();
 		

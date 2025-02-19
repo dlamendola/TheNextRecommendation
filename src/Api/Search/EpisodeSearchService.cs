@@ -10,16 +10,8 @@ public class EpisodeSearchService(EmbeddingGenerator embeddingGenerator, Episode
 	{
 		var embedding = await embeddingGenerator.Generate(searchText);
 		
-		var semanticallySimilarEpisodes = await store.SearchBySemanticSimilarity(new Vector(embedding), numResults);
+		var semanticallySimilarEpisodes = await store.GetNearestEpisodes(new Vector(embedding), numResults);
 
-		var results = semanticallySimilarEpisodes.Select(x => new Episode(
-			x.SeasonNumber,
-			x.EpisodeNumber,
-			x.Title,
-			null,
-			x.Summary,
-			x.Synopsis));
-
-		return results.ToList();
+		return semanticallySimilarEpisodes.ToEpisodes();
 	}
 }

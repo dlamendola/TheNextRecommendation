@@ -56,7 +56,7 @@ public class EpisodeStoreTests : IClassFixture<DbFixture>
 		var id = await _store.Save(episode);
 		var vector = CreateVector();
 		
-		var result = await _store.SearchBySemanticSimilarity(vector, 1);
+		var result = await _store.GetNearestEpisodes(vector, 1);
 
 		Assert.NotNull(result);
 	}

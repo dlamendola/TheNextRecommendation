@@ -17,7 +17,7 @@ public class EpisodeSearchServiceTests
 		var db = new Mock<EpisodeStore>(new Mock<DbDataSource>().Object);
 		var service = new EpisodeSearchService(embeddingGenerator.Object, db.Object);
 		embeddingGenerator.Setup(x => x.Generate("search text")).ReturnsAsync(new []{1f, 2f, 3f});
-		db.Setup(x => x.SearchBySemanticSimilarity(new Vector(new[] { 1f, 2f, 3f }), 1)).ReturnsAsync(new List<EpisodeRow>
+		db.Setup(x => x.GetNearestEpisodes(new Vector(new[] { 1f, 2f, 3f }), 1)).ReturnsAsync(new List<EpisodeRow>
 		{
 			new EpisodeRow(null, SeasonNumber: 3, EpisodeNumber: 12, Title: "Darmok", "some summary", "and a details synopsis", null)
 		});
