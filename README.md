@@ -1,5 +1,5 @@
 # The Next Recommendation
-This app generates [embeddings](https://platform.openai.com/docs/guides/embeddings) for each episode synopsis of _Star Trek: The Next Generation_ and allows you to search using natural language and will return the most relevant episodes based on semantic similarity to the search input.
+This app generates [embeddings](https://platform.openai.com/docs/guides/embeddings) for each episode synopsis of _Star Trek: The Next Generation_ and allows you to search using natural language, returning the most relevant episodes based on semantic similarity to the search input.
 
 There are two programs contained in this repo:
 - `ImdbIngest` - responsible for scraping episode data from IMDB and generating embeddings using the OpenAI API and storing them in a Postgres db using the [pgvector](https://github.com/pgvector/pgvector) extension.
@@ -17,6 +17,6 @@ After that you can run the Api project which will accept search input, generate 
 ## Technical details
 - OpenAI API to generate embeddings using the `text-embedding-3-small` model
 - pgvector to store embeddings
-- pgvector vector similarity search using cosine distance
+- pgvector similarity search using cosine similarity to find most relevant episodes
 - Deployed to AWS using RDS and AppRunner 
 - C# / .NET 9
