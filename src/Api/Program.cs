@@ -1,4 +1,5 @@
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using Api;
 using Api.Search;
 using OpenAI;
@@ -24,13 +25,16 @@ if (string.IsNullOrEmpty(dbConn))
 
 await using var dataSource = PostgresVectorUtils.BuildDataSource(dbConn);
 
-builder.Services.AddScoped<EmbeddingClient>((x) => new EmbeddingClient(
-	"text-embedding-3-small",
-	new ApiKeyCredential(openaiApiKey),
+var embeddingClient = new EmbeddingClient(
+	"text-embedding-3-small", 
+	new ApiKeyCredential(openaiApiKey), 
 	new OpenAIClientOptions
 	{
-		NetworkTimeout = TimeSpan.FromSeconds(5)
-	}));
+		NetworkTimeout = TimeSpan.FromSeconds(5),
+		RetryPolicy = new ClientRetryPolicy(0),
+	});
+
+builder.Services.AddSingleton(embeddingClient); 
 builder.Services.AddScoped<EmbeddingGenerator>();
 builder.Services.AddSingleton(dataSource);
 builder.Services.AddScoped<EpisodeStore>();
