@@ -22,23 +22,20 @@ if (string.IsNullOrEmpty(dbConn))
 	return;
 }
 
-var embeddingClient = new EmbeddingClient(
-	"text-embedding-3-small", 
-	new ApiKeyCredential(openaiApiKey), 
-	new OpenAIClientOptions
-	{
-		NetworkTimeout = TimeSpan.FromSeconds(2)
-	});
-var embeddingGenerator = new EmbeddingGenerator(embeddingClient);
-
 await using var dataSource = PostgresVectorUtils.BuildDataSource(dbConn);
 
-builder.Services.AddSingleton(embeddingGenerator);
+builder.Services.AddScoped<EmbeddingClient>((x) => new EmbeddingClient(
+	"text-embedding-3-small",
+	new ApiKeyCredential(openaiApiKey),
+	new OpenAIClientOptions
+	{
+		NetworkTimeout = TimeSpan.FromSeconds(5)
+	}));
+builder.Services.AddScoped<EmbeddingGenerator>();
 builder.Services.AddSingleton(dataSource);
 builder.Services.AddScoped<EpisodeStore>();
-
-builder.Services.AddSingleton<EpisodeSearchService>();
-builder.Services.AddSingleton<SearchHandler>();
+builder.Services.AddScoped<EpisodeSearchService>();
+builder.Services.AddScoped<SearchHandler>();
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
