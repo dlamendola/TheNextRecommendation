@@ -12,6 +12,9 @@ export function meta({}: Route.MetaArgs) {
 export async function clientAction({request}: Route.ClientActionsArgs) {
   const formData = await request.formData();
   const searchText = formData.get("query");
+  if (!searchText) {
+      return undefined;
+  }
 
   const episodes = await search(searchText);
   return episodes;
@@ -28,12 +31,11 @@ export default function Home({actionData}: Route.ComponentProps<typeof Home>) {
           <h1>The Next Recommendation</h1>
           <Form method="post">
             <input type="text" autoFocus name="query" className="search-input" placeholder={placeholder} />
-            <button type="submit" disabled={isNavigating}>Search</button>
+            <button type="submit" disabled={isNavigating}>Search {isNavigating && <span id="search-spinner"/>}</button>
           </Form>
         </div>
 
         <div className="results">
-          {isNavigating && <p>Loading...</p>}
           {actionData ? (
               actionData.map((ep, i) => (
                   <div key={i} className="episode">
@@ -44,5 +46,5 @@ export default function Home({actionData}: Route.ComponentProps<typeof Home>) {
           ) : null}
         </div>
       </div>
-  )
+  );
 }
