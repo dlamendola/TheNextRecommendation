@@ -16,7 +16,7 @@ export async function clientAction({request}: Route.ClientActionsArgs) {
   return episodes;
 }
 
-export default function Home({actionData}: Route.ComponentProps<any>) {
+export default function Home({actionData}: Route.ComponentProps<typeof Home>) {
   const navigation = useNavigation();
   const isNavigating = Boolean(navigation.location);
   
@@ -25,7 +25,7 @@ export default function Home({actionData}: Route.ComponentProps<any>) {
         <div className="search-container">
           <h1>The Next Recommendation</h1>
           <Form method="post">
-            <input type="text" name="query" className="search-input"/>
+            <input type="text" autoFocus name="query" className="search-input"/>
             <button type="submit" disabled={isNavigating}>Search</button>
           </Form>
         </div>
@@ -33,9 +33,9 @@ export default function Home({actionData}: Route.ComponentProps<any>) {
         <div className="results">
           {isNavigating && <p>Loading...</p>}
           {actionData ? (
-              actionData.episodes.map((ep, i) => (
+              actionData.map((ep, i) => (
                   <div key={i} className="episode">
-                    <h3>{`${ep.title} (S${ep.season}E${ep.episode}`}</h3>
+                    <h3>{`${ep.title} (S${ep.season}E${ep.episode})`}</h3>
                     <p>{ep.summary}</p>
                   </div>
               ))
