@@ -10,4 +10,9 @@ export default defineConfig({
     },
   },
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
+  resolve: {
+    alias: {
+      'react-dom/server': 'react-dom/server.node', // to get bun and react to get along: https://github.com/remix-run/react-router/issues/12568#issuecomment-2625776697
+    },
+  },
 });

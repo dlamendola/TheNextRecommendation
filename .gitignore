@@ -13,5 +13,6 @@ Desktop.ini
 .DS_Store
 
 deploy.ps1
+.env
 
 src/Api/wwwroot/*
