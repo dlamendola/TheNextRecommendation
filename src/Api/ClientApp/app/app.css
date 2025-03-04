@@ -1,15 +1,139 @@
-@import "tailwindcss";
-
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+html, body {
+  background-color: #000;
+  background-image:
+          radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+          radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+          radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
+main {
+  flex: 1;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+.search {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding-top: 150px;
+}
+
+.search-container {
+  text-align: center;
+  padding: 50px 0;
+}
+
+@font-face {
+  font-family: 'TngTitle';
+  src: url('../fonts/TNG_Title.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'TngMonitors';
+  src: url('../fonts/Trek_TNG_Monitors.ttf') format('truetype');
+}
+
+.search-container h1 {
+  font-family: 'TngTitle', 'Arial', sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+  color: #d6a444;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 40px;
+}
+
+input[type="text"] {
+  background: rgba(16, 24, 48, 0.8);
+  border: 2px solid #d6a444;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 18px;
+  padding: 15px 25px;
+  width: 400px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(125, 249, 255, 0.3);
+}
+
+input[type="text"]:focus {
+  outline: none;
+  box-shadow: 0 0 20px rgba(125, 249, 255, 0.5);
+}
+
+button {
+  background: linear-gradient(45deg,#2b53a7,	#4476d6);
+  border: none;
+  border-radius: 25px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 10px;
+  margin-top: 20px;
+  padding: 15px 30px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(125, 249, 255, 0.5);
+}
+
+.results {
+  margin-top: 40px;
+}
+
+.episode {
+  background: #000;
+  border: 1px solid #d6a444;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  max-width: 800px;
+}
+
+.episode:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(125, 249, 255, 0.3);
+}
+
+.episode h3 {
+  color: #d6a444;
+  margin: 0 0 10px 0;
+}
+
+.episode p {
+  color: #fff;
+  line-height: 1.6;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: auto;
+}
+
+footer img {
+  width: 32px;
+  height: 32px;
+  transition: transofmr 0.5s;
+}
+
+footer img:hover {
+  transform: scale(1.1);
 }

@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import githubLogo from "./assets/github-mark-white.svg";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -33,19 +34,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+        <main>
+          {children}
+          <ScrollRestoration/>
+          <Scripts/>
+        </main>
+        <footer>
+          <a href="https://github.com/dlamendola/TheNextRecommendation" target="_blank"
+             aria-label="View source code on GitHub">
+            <img src={githubLogo} alt="GitHub" width="32" height="32"/>
+          </a>
+        </footer>
       </body>
     </html>
   );
 }
 
 export default function App() {
-  return <Outlet />;
+  return <Outlet/>;
 }
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+export function ErrorBoundary({error}: Route.ErrorBoundaryProps) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
