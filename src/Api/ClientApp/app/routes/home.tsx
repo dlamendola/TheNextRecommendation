@@ -1,6 +1,7 @@
 import type { Route } from "./+types/home";
 import {search} from "~/api";
 import {Form, useNavigation} from "react-router";
+import {usePlaceholder} from "~/usePlaceholder";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -17,6 +18,7 @@ export async function clientAction({request}: Route.ClientActionsArgs) {
 }
 
 export default function Home({actionData}: Route.ComponentProps<typeof Home>) {
+  const placeholder = usePlaceholder();
   const navigation = useNavigation();
   const isNavigating = Boolean(navigation.location);
   
@@ -25,7 +27,7 @@ export default function Home({actionData}: Route.ComponentProps<typeof Home>) {
         <div className="search-container">
           <h1>The Next Recommendation</h1>
           <Form method="post">
-            <input type="text" autoFocus name="query" className="search-input"/>
+            <input type="text" autoFocus name="query" className="search-input" placeholder={placeholder} />
             <button type="submit" disabled={isNavigating}>Search</button>
           </Form>
         </div>
