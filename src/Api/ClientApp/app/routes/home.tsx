@@ -9,9 +9,9 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export async function clientAction({request}: Route.ClientActionsArgs) {
+export async function clientAction({request}: Route.ClientActionArgs) {
   const formData = await request.formData();
-  const searchText = formData.get("query");
+  const searchText = formData.get("query") as string;
   if (!searchText) {
       return undefined;
   }
@@ -20,7 +20,7 @@ export async function clientAction({request}: Route.ClientActionsArgs) {
   return episodes;
 }
 
-export default function Home({actionData}: Route.ComponentProps<typeof Home>) {
+export default function Home({actionData}: Route.ComponentProps) {
   const placeholder = usePlaceholder();
   const navigation = useNavigation();
   const isNavigating = Boolean(navigation.location);
