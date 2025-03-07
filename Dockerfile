@@ -1,6 +1,7 @@
 FROM oven/bun:1.2.4 AS build-react
 WORKDIR /app
 COPY src/Api/ClientApp/package.json .
+COPY src/Api/ClientApp/bun.lock .
 RUN bun install
 COPY src/Api/ClientApp .
 RUN bun run build

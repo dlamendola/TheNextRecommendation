@@ -40,6 +40,7 @@ builder.Services.AddSingleton(dataSource);
 builder.Services.AddScoped<EpisodeStore>();
 builder.Services.AddScoped<EpisodeSearchService>();
 builder.Services.AddScoped<SearchHandler>();
+builder.Services.AddScoped<EpisodeHandler>();
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();

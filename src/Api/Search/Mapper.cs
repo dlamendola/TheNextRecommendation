@@ -14,6 +14,16 @@ public static class Mapper
 				.ToList());
 	}
 
+	public static EpisodeApiResponse ToEpisodeApiResponse(this EpisodeRow episode)
+	{
+		return new EpisodeApiResponse(episode.SeasonNumber, episode.EpisodeNumber, episode.Title, episode.Summary);
+	}
+
+	public static RelatedEpisodesApiResponse ToRelatedEpisodesApiResponse(this List<EpisodeRow> episodes)
+	{
+		return new RelatedEpisodesApiResponse(episodes.Select(ToEpisodeApiResponse).ToList());
+	}
+
 	public static List<Episode> ToEpisodes(this List<EpisodeRow> rows)
 	{
 		return rows
