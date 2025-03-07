@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
 import {search} from "~/api";
-import {Form, useNavigation} from "react-router";
+import {Form, Link, useNavigation} from "react-router";
 import {usePlaceholder} from "~/usePlaceholder";
 
 export function meta({}: Route.MetaArgs) {
@@ -39,7 +39,7 @@ export default function Home({actionData}: Route.ComponentProps) {
           {actionData ? (
               actionData.map((ep, i) => (
                   <div key={i} className="episode">
-                    <h3>{`${ep.title} (S${ep.season}E${ep.episode})`}</h3>
+                      <h3><Link to={`/season/${ep.season}/ep/${ep.episode}`}>{`${ep.title} (S${ep.season}E${ep.episode})`}</Link></h3>
                     <p>{ep.summary}</p>
                   </div>
               ))

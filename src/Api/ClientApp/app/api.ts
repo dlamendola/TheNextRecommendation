@@ -31,3 +31,17 @@ export async function search(query: string): Promise<Episode[]> {
 
     return validatedEpisodes.episodes;
 }
+
+export async function getEpisode(seasonNumber: number, episodeNumber: number): Promise<Episode> {
+    const response = await fetch(`/api/s/${seasonNumber}/e/${episodeNumber}`);
+    if (response.status !== 200) {
+        throw new Error(`Failed to fetch episode: ${response.status}`);
+    }
+
+    const episode = await response.json();
+
+    const validatedEpisode = EpisodeSchema.parse(episode);
+
+    return validatedEpisode;
+
+}

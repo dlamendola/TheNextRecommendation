@@ -87,8 +87,12 @@ button {
 }
 
 button:hover {
-  transform: scale(1.05);
   box-shadow: 0 0 20px rgba(125, 249, 255, 0.5);
+}
+
+a {
+  color: #d6a444;
+  text-decoration: underline
 }
 
 .results {
@@ -106,7 +110,6 @@ button:hover {
 }
 
 .episode:hover {
-  transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(125, 249, 255, 0.3);
 }
 
