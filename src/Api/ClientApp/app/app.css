@@ -34,6 +34,29 @@ main {
   padding: 50px 0;
 }
 
+.episode-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.episode-container h1 {
+  font-size: 50px;
+  font-family: 'TngMonitors', fantasy;
+}
+
+.episode-container p {
+  max-width: 800px;
+}
+
+.related-episodes h2 {
+  color: #d6a444;
+}
+
 @font-face {
   font-family: 'TngTitle';
   src: url('../fonts/TNG_Title.ttf') format('truetype');

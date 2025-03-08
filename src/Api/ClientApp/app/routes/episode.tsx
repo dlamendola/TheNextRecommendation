@@ -1,5 +1,6 @@
 import type {Route} from "./+types/episode";
 import {getEpisode, getRelatedEpisodes} from "~/api";
+import EpisodeCard from "~/components/EpisodeCard";
 
 export async function clientLoader({params}: Route.ClientLoaderArgs) {
     const seasonNumber = parseInt(params.season);
@@ -13,7 +14,6 @@ export async function clientLoader({params}: Route.ClientLoaderArgs) {
 
     return {episode, relatedEpisodes};
 }
-
 clientLoader.hydrate = true as const;
 
 export default function Episode({loaderData}: Route.ComponentProps) {
@@ -21,17 +21,15 @@ export default function Episode({loaderData}: Route.ComponentProps) {
     const relatedEpisodes = loaderData.relatedEpisodes;
 
     return (
-        <div>
-            <div>
+        <div className="episode-container">
+            <div className="episode-details">
                 <h1>{episode.title} {`(S${episode.season}E${episode.episode})`}</h1>
                 <p>{episode.summary}</p>
             </div>
-            <div>
+            <div className="related-episodes">
+                <h2>Related episodes</h2>
                 {relatedEpisodes.map((ep, i) => (
-                    <div key={i}>
-                        <h4>{ep.title}</h4>
-                        <p>{ep.summary}</p>
-                    </div>
+                    <EpisodeCard key={i} seasonNumber={ep.season} episodeNumber={ep.episode} title={ep.title} summary={ep.summary} />
                 ))}
             </div>
         </div>
