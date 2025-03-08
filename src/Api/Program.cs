@@ -2,6 +2,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using Api;
 using Api.Search;
+using Microsoft.AspNetCore.Rewrite;
 using OpenAI;
 using OpenAI.Embeddings;
 using Shared;
@@ -44,6 +45,8 @@ builder.Services.AddScoped<EpisodeHandler>();
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
+
+app.UseRewriter(new RewriteOptions().AddRewrite("^/app.*", "/", true));
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
