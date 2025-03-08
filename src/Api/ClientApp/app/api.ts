@@ -11,6 +11,10 @@ const SearchResponseSchema = z.object({
     episodes: EpisodeSchema.array()
 });
 
+const RelatedEpisodesResponseSchema = z.object({
+    relatedEpisodes: EpisodeSchema.array()
+});
+
 export type Episode = z.infer<typeof EpisodeSchema>;
 
 export async function search(query: string): Promise<Episode[]> {
@@ -43,5 +47,15 @@ export async function getEpisode(seasonNumber: number, episodeNumber: number): P
     const validatedEpisode = EpisodeSchema.parse(episode);
 
     return validatedEpisode;
+}
 
+export async function getRelatedEpisodes(seasonNumber: number, episodeNumber: number): Promise<Episode[]> {
+    const response = await fetch(`/api/s/${seasonNumber}/e/${episodeNumber}/related`);
+    if (response.status !== 200) {
+        throw new Error(`Failed to fetch related episode: ${response.status}`);
+    }
+    const episodes = await response.json();
+    const validatedEpisodes = RelatedEpisodesResponseSchema.parse(episodes);
+
+    return validatedEpisodes.relatedEpisodes;
 }
