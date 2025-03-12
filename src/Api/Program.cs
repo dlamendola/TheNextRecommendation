@@ -46,7 +46,7 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-app.UseRewriter(new RewriteOptions().AddRewrite("^/app.*", "/", true));
+app.UseRewriter(new RewriteOptions().AddRewrite("^app(/.*)?$", "/", true));
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

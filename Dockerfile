@@ -23,5 +23,6 @@ RUN dotnet publish src/Api/Api.csproj -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 COPY --from=build-dotnet /app/publish .
-COPY --from=build-react /app/build ./wwwroot
+RUN rm -rf ./wwwroot/*
+COPY --from=build-react /app/build/client ./wwwroot
 ENTRYPOINT ["dotnet", "Api.dll"]

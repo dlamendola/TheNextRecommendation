@@ -11,12 +11,6 @@ import type {Route} from "./+types/root";
 import "./app.css";
 import githubLogo from "./assets/github-mark-white.svg";
 
-export function links() {
-    return [
-        {rel: "preload", href: "/fonts/TNG_Title.ttf", as: "font", type: "font/ttf", crossOrigin: "anonymous"},
-    ];
-}
-
 export function Layout({children}: { children: React.ReactNode }) {
     return (
         <html lang="en">
