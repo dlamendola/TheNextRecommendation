@@ -3,7 +3,7 @@ This app generates [embeddings](https://platform.openai.com/docs/guides/embeddin
 
 There are two programs contained in this repo:
 - `ImdbIngest` - responsible for scraping episode data from IMDB and generating embeddings using the OpenAI API and storing them in a Postgres db using the [pgvector](https://github.com/pgvector/pgvector) extension.
-- `Api` - handles search requests and serves the website itself (html/css/js)
+- `Api` - handles search requests and serves the website itself
 
 ## Running locally
 Both projects use .NET 9 and require two environment variables:
@@ -18,5 +18,6 @@ After that you can run the Api project which will accept search input, generate 
 - OpenAI API to generate embeddings using the `text-embedding-3-small` model
 - pgvector to store embeddings
 - pgvector similarity search using cosine similarity to find most relevant episodes
-- Deployed to AWS using RDS and AppRunner 
+- Deployed to AWS using RDS and EC2 
 - C# / .NET 9
+- React / TypeScript / react-router
